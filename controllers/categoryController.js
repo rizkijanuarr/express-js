@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const { Category } = require("../models");
 
 exports.getAllCategories = async (req, res) => {
@@ -51,6 +52,35 @@ exports.detailCategory = async (req, res) => {
       return res.status(200).json({
         status: "Success!",
         data: category,
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      status: "Fail",
+      error: "Server Down",
+    });
+  }
+};
+
+exports.updateCategory = async (req, res) => {
+  try {
+    const id = req.params.id;
+    await Category.update(req.body, {
+      where: {
+        id: id,
+      },
+    });
+
+    const newCategory = await Category.findByPk(id);
+    if (!newCategory) {
+      return res.status(404).json({
+        status: "Fail",
+        error: "Data tidak ditemukan!",
+      });
+    } else {
+      res.status(200).json({
+        status: "Success",
+        data: newCategory,
       });
     }
   } catch (error) {
