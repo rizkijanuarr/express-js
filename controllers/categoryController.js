@@ -90,3 +90,32 @@ exports.updateCategory = async (req, res) => {
     });
   }
 };
+
+exports.destroyCategory = async (req, res) => {
+  try {
+    const id = req.params.id;
+    await Category.destroy({
+      where: {
+        id: id,
+      },
+    });
+
+    const destroyCategory = await Category.findByPk(id);
+    if (destroyCategory === 0) {
+      return res.status(404).json({
+        status: "Fail",
+        error: "Data tidak ditemukan!",
+      });
+    } else {
+      return res.status(200).json({
+        status: "Success!",
+        message: `Data dengan id ${id} berhasil dihapus!`,
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      status: "Fail",
+      error: "Server Down",
+    });
+  }
+};

@@ -5,6 +5,7 @@ const {
   storeCategory,
   detailCategory,
   updateCategory,
+  destroyCategory,
 } = require("../controllers/categoryController");
 
 // GET ALL
@@ -18,5 +19,8 @@ router.get("/:id", detailCategory);
 
 // UPDATE DATA
 router.put("/:id", updateCategory);
+
+// DESTROY DATA
+router.delete("/:id", destroyCategory);
 
 module.exports = router;
