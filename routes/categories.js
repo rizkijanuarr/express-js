@@ -3,13 +3,17 @@ const router = express.Router();
 const {
   getAllCategories,
   storeCategory,
+  detailCategory,
 } = require("../controllers/categoryController");
 
-// /api/v1/categories/
+// GET ALL
 router.get("/", getAllCategories);
 
-// /api/v1/categories/
+// CREATE DATA
 router.post("/", storeCategory);
+
+// GET BY ID
+router.get("/:id", detailCategory);
 
 // /api/v1/categories/filterData
 router.get("/filterData", (req, res) => {
