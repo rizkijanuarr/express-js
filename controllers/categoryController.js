@@ -1,3 +1,5 @@
+const { Category } = require("../models");
+
 exports.getAllCategories = (req, res) => {
   res.status(200).json({
     status: "success",
@@ -18,19 +20,23 @@ exports.getAllCategories = (req, res) => {
   });
 };
 
-exports.storeCategory = (req, res) => {
-  let name = req.body.name;
-  let description = req.body.description;
+exports.storeCategory = async (req, res) => {
+  try {
+    let { name, description } = req.body;
 
-  if (!name && !description) {
+    const newCategory = await Category.create({
+      name,
+      description,
+    });
+
+    res.status(201).json({
+      status: "Success!",
+      data: newCategory,
+    });
+  } catch (error) {
     return res.status(400).json({
-      status: "fail",
-      error: "Validasi gagal!",
+      status: "Fail!",
+      error: error.errors,
     });
   }
-
-  return res.status(200).json({
-    status: "Success",
-    message: "Validasi Sukses!",
-  });
 };
