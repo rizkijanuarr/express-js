@@ -12,18 +12,16 @@ exports.getAllCategories = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       status: "Fail",
-      error: "Server Down",
+      error: error.errors.map((err) => err.message),
     });
   }
 };
 
 exports.storeCategory = async (req, res) => {
   try {
-    let { name, description } = req.body;
-
     const newCategory = await Category.create({
-      name,
-      description,
+      name: req.body.name,
+      description: req.body.description,
     });
 
     res.status(201).json({
@@ -33,7 +31,7 @@ exports.storeCategory = async (req, res) => {
   } catch (error) {
     return res.status(400).json({
       status: "Fail!",
-      error: error.errors,
+      error: error.errors.map((err) => err.message),
     });
   }
 };
@@ -46,7 +44,7 @@ exports.detailCategory = async (req, res) => {
     if (!category) {
       return res.status(404).json({
         status: "Fail",
-        error: "Data yang Anda cari tidak ditemukan!",
+        error: ["Data yang Anda cari tidak ditemukan!"],
       });
     } else {
       return res.status(200).json({
@@ -57,7 +55,7 @@ exports.detailCategory = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       status: "Fail",
-      error: "Server Down",
+      error: error.errors.map((err) => err.message),
     });
   }
 };
@@ -75,7 +73,7 @@ exports.updateCategory = async (req, res) => {
     if (!newCategory) {
       return res.status(404).json({
         status: "Fail",
-        error: "Data tidak ditemukan!",
+        error: ["Data tidak ditemukan!"],
       });
     } else {
       res.status(200).json({
@@ -86,7 +84,7 @@ exports.updateCategory = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       status: "Fail",
-      error: "Server Down",
+      error: error.errors.map((err) => err.message),
     });
   }
 };
@@ -104,7 +102,7 @@ exports.destroyCategory = async (req, res) => {
     if (destroyCategory === 0) {
       return res.status(404).json({
         status: "Fail",
-        error: "Data tidak ditemukan!",
+        error: ["Data tidak ditemukan!"],
       });
     } else {
       return res.status(200).json({
@@ -115,7 +113,7 @@ exports.destroyCategory = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       status: "Fail",
-      error: "Server Down",
+      error: error.errors.map((err) => err.message),
     });
   }
 };
