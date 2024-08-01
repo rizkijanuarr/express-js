@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init(
     {
+      // VALIDASI REGISTER
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
@@ -58,9 +59,15 @@ module.exports = (sequelize, DataTypes) => {
           }
         },
       },
+      // VALIDASI REGISTER
       sequelize,
       modelName: "User",
     }
   );
+  // VALIDASI LOGIN
+  User.prototype.correctPassword = async (reqPassword, passwordDB) => {
+    return await bcrypt.compareSync(reqPassword, passwordDB);
+  };
+  // VALIDASI LOGIN
   return User;
 };

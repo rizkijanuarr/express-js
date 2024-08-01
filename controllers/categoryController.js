@@ -12,7 +12,7 @@ exports.getAllCategories = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       status: "Fail",
-      error: error.errors.map((err) => err.message),
+      error: error.errors,
     });
   }
 };
@@ -31,7 +31,7 @@ exports.storeCategory = async (req, res) => {
   } catch (error) {
     return res.status(400).json({
       status: "Fail!",
-      error: error.errors.map((err) => err.message),
+      error: error.errors,
     });
   }
 };
@@ -84,7 +84,7 @@ exports.updateCategory = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       status: "Fail",
-      error: error.errors.map((err) => err.message),
+      error: error.errors,
     });
   }
 };
@@ -113,7 +113,7 @@ exports.destroyCategory = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       status: "Fail",
-      error: error.errors.map((err) => err.message),
+      error: error.errors,
     });
   }
 };
